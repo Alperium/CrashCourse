@@ -1,0 +1,15 @@
+# UE geçici/derleme çıktılarını dışla
+Binaries/
+DerivedDataCache/
+Intermediate/
+Saved/
+# Rider/IDE
+.idea/
+.vscode/
+# Build çıktıları
+*.VC.db
+*.opendb
+# Platform geçici
+*.pdb
+*.obj
+*.ipch
