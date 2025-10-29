@@ -47,25 +47,35 @@ UAbilitySystemComponent* ACC_PlayerCharacter::GetAbilitySystemComponent() const
 	return PS->GetAbilitySystemComponent();
 }
 
+UAttributeSet* ACC_PlayerCharacter::GetAttributeSet() const
+{
+	const ACC_PlayerState* PS = Cast<ACC_PlayerState>(GetPlayerState());
+	if (!IsValid(PS)) return nullptr;
+
+	return PS->GetAttributeSet();
+}
+
 void ACC_PlayerCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
-
-	UAbilitySystemComponent* ASC = GetAbilitySystemComponent();
-	if (!IsValid(ASC)) return;
+	
 	if (!HasAuthority()) return;
-
-	ASC->InitAbilityActorInfo(GetPlayerState(), this);
-	GiveStartupAbilities();
+	InitializeGAS();
 }
 
 void ACC_PlayerCharacter::OnRep_PlayerState()
 {
 	Super::OnRep_PlayerState();
 
+	InitializeGAS();
+}
+
+void ACC_PlayerCharacter::InitializeGAS()
+{
 	UAbilitySystemComponent* ASC = GetAbilitySystemComponent();
 	if (!IsValid(ASC)) return;
 
 	ASC->InitAbilityActorInfo(GetPlayerState(), this);
+	Super::InitializeGAS();
 }
 

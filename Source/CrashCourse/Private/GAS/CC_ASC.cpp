@@ -28,6 +28,28 @@ void UCC_ASC::OnRep_ActivateAbilities()
 	}
 }
 
+void UCC_ASC::SetAbilityLevel(const TSubclassOf<UGameplayAbility> AbilityClass, const int32 NewLevel)
+{
+	if (IsValid(GetAvatarActor()) && !GetAvatarActor()->HasAuthority()) return;
+
+	FGameplayAbilitySpec* AbilitySpec = FindAbilitySpecFromClass(AbilityClass);
+	if (!AbilitySpec) return;
+
+	AbilitySpec->Level = NewLevel;
+	MarkAbilitySpecDirty(*AbilitySpec);
+}
+
+void UCC_ASC::IncreaseAbilityLevel(const TSubclassOf<UGameplayAbility> AbilityClass, const int32 IncreaseAmount)
+{
+	if (IsValid(GetAvatarActor()) && !GetAvatarActor()->HasAuthority()) return;
+
+	FGameplayAbilitySpec* AbilitySpec = FindAbilitySpecFromClass(AbilityClass);
+	if (!AbilitySpec) return;
+
+	AbilitySpec->Level += IncreaseAmount;
+	MarkAbilitySpecDirty(*AbilitySpec);
+}
+
 void UCC_ASC::HandleAutoActivateAbility(const FGameplayAbilitySpec& AbilitySpec)
 {
 	// Similar behaviour could be achieved by giving the ability with GiveAbilityAndActivateOnce too

@@ -3,6 +3,7 @@
 
 #include "Character/CC_EnemyCharacter.h"
 #include "GAS/CC_ASC.h"
+#include "GAS/CC_Attributes.h"
 
 ACC_EnemyCharacter::ACC_EnemyCharacter()
 {
@@ -11,6 +12,8 @@ ACC_EnemyCharacter::ACC_EnemyCharacter()
 	AbilitySystemComponent = CreateDefaultSubobject<UCC_ASC>("AbilitySystemComponent");
 	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
+
+	Attributes = CreateDefaultSubobject<UCC_Attributes>("Attributes");
 }
 
 void ACC_EnemyCharacter::BeginPlay()
@@ -23,7 +26,6 @@ void ACC_EnemyCharacter::BeginPlay()
 
 	if (!HasAuthority()) return;
 
-	GiveStartupAbilities();
-	
+	InitializeGAS();
 }
 

@@ -7,6 +7,7 @@
 #include "AbilitySystemInterface.h"
 #include "CC_PlayerState.generated.h"
 
+class UAttributeSet;
 class UCC_ASC;
 
 /**
@@ -22,9 +23,13 @@ public:
 	ACC_PlayerState();
 	
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override { return AbilitySystemComponent; }
+	FORCEINLINE UAttributeSet* GetAttributeSet() const { return Attributes; }
 
 private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Crash|GAS")
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
+
+	UPROPERTY()
+	TObjectPtr<UAttributeSet> Attributes;
 };
